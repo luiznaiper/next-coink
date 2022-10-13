@@ -20,7 +20,7 @@ const ProductItem = ({ product }) => {
             <h2 className="text-lg">{product.name}</h2>
           </a>
         </Link>
-        <p className="mb-2">{product.brand}</p>
+        <p className="mb-2">{product.subcategory}</p>
         <p>${product.price}</p>
         <button className="primary-button" type="button">
           Agregar al carrito
