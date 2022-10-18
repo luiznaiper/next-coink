@@ -31,4 +31,4 @@ function StoreProvider({ children }) {
   return <Store.Provider value={value}>{children}</Store.Provider>;
 }
 
-export { createContext, StoreProvider };
+export { Store, createContext, StoreProvider };
