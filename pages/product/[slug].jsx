@@ -11,7 +11,7 @@ const ProductScreen = () => {
   const router = useRouter();
   const { query } = useRouter();
   const { slug } = query;
-  const product = data.products.find((product) => product.slug === slug);
+  const product = data.products.find((x) => x.slug === slug);
   if (!product) {
     return <div>Producto no encontrado :(</div>;
   }
