@@ -9,7 +9,9 @@ const LoginScreen = () => {
     register,
     formState: { errors },
   } = useForm();
-  const submitHandler = ({ email, password }) => {};
+  const submitHandler = ({ email, password }) => {
+    console.log(email, password);
+  };
   return (
     <Layout title="Iniciar Sesión">
       <form
