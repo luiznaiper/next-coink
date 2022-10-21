@@ -25,7 +25,7 @@ const ProductScreen = () => {
     }
 
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
+    router.push('/carrito');
   };
   return (
     <Layout title={product.name}>

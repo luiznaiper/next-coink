@@ -24,7 +24,7 @@ const Layout = ({ title, children }) => {
               <a className="text-lg font-bold">Coink Oink</a>
             </Link>
             <div>
-              <Link href="/cart">
+              <Link href="/carrito">
                 <a className="p-2">
                   Carrito
                   {cartItemsCount > 0 && (
@@ -34,8 +34,8 @@ const Layout = ({ title, children }) => {
                   )}
                 </a>
               </Link>
-              <Link href="/login">
-                <a className="p-2">Login</a>
+              <Link href="/entrar">
+                <a className="p-2">Iniciar Sesión</a>
               </Link>
             </div>
           </nav>

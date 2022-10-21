@@ -44,7 +44,7 @@ const CartScreen = () => {
                 {cartItems.map((item) => (
                   <tr key={item.slug} className="border-b">
                     <td>
-                      <Link href={`/product/${item.slug}`}>
+                      <Link href={`/producto/${item.slug}`}>
                         <a className="flex item-center">
                           <Image
                             src={item.image}
@@ -93,7 +93,7 @@ const CartScreen = () => {
               </li>
               <li>
                 <button
-                  onClick={() => router.push('shipping')}
+                  onClick={() => router.push('entrar?redirect=/envio')}
                   className="primary-button w-full"
                 >
                   Proceder al pago
