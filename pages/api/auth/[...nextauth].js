@@ -1,4 +1,4 @@
-import bycriptjs from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '../../../models/User';
@@ -28,10 +28,7 @@ export default NextAuth({
           email: credentials.email,
         });
         await db.disconnect();
-        if (
-          user &&
-          bycriptjs.compareSync(credentials.password, user.password)
-        ) {
+        if (user && bcryptjs.compareSync(credentials.password, user.password)) {
           return {
             _id: user._id,
             name: user.name,
@@ -40,7 +37,7 @@ export default NextAuth({
             isAdmin: user.isAdmin,
           };
         }
-        throw new Error('Email o contraseña inválido');
+        throw new Error('Invalid email or password');
       },
     }),
   ],

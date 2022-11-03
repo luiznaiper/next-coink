@@ -45,7 +45,7 @@ const Layout = ({ title, children }) => {
                 session.user.name
               ) : (
                 <Link href="/entrar">
-                  <a className="p-2">Iniciar Sesión</a>
+                  <a className="p-2">Entrar</a>
                 </Link>
               )}
             </div>
