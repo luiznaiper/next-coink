@@ -2,26 +2,29 @@ import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import Layout from '../../components/Layout';
-import data from '../../utils/data';
 import { Store } from '../../utils/Store';
+import db from '../../utils/db';
+import Product from '../../models/Products';
 
-const ProductScreen = () => {
+const ProductScreen = (props) => {
+  const { product } = props;
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-  const { query } = useRouter();
-  const { slug } = query;
-  const product = data.products.find((x) => x.slug === slug);
   if (!product) {
-    return <div>Producto no encontrado :(</div>;
+    return (
+      <Layout title="Producto no encontrado">Producto no encontrado :(</Layout>
+    );
   }
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
+    const { data } = await axios.get(`/api/products/${product._id}`);
 
-    if (product.countInStock < quantity) {
-      alert('No tenemos más de ese puerco por ahora XD');
-      return;
+    if (data.countInStock < quantity) {
+      return toast.error('No tenemos más de ese puerco por ahora XD');
     }
 
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
@@ -81,5 +84,19 @@ const ProductScreen = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
+}
 
 export default ProductScreen;

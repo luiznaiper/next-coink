@@ -4,8 +4,10 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { XCircleIcon } from '@heroicons/react/outline';
+import axios from 'axios';
 import { Store } from '../utils/Store';
 import Layout from '../components/Layout';
+import { toast } from 'react-toastify';
 
 const CartScreen = () => {
   const router = useRouter();
@@ -16,9 +18,16 @@ const CartScreen = () => {
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
-  const updateCartHandler = (item, qty) => {
+  const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      return toast.error(
+        'Disculpa, ya se nos acabó ese puerco, manda whats para crear uno'
+      );
+    }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    toast.success('Producto agregado al carrito');
   };
   return (
     <Layout title="Carrito de compra">
