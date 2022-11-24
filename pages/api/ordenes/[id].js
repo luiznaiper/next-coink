@@ -1,2 +1,1 @@
-
-const handler = async ()
+const handler = async();
