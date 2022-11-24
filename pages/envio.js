@@ -45,7 +45,7 @@ const ShippingScreen = () => {
         },
       })
     );
-    router.push('pago');
+    router.push('/pago');
   };
   return (
     <Layout title="Dirección de Envío">
