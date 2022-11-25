@@ -54,7 +54,7 @@ const PlaceOrderScreen = () => {
         })
       );
 
-      router.push(`/order/${data._id}`);
+      router.push(`/orden/${data._id}`);
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
