@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
+import axios from 'axios';
 
 const LoginScreen = () => {
   const { data: session } = useSession();
@@ -22,10 +23,16 @@ const LoginScreen = () => {
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
   } = useForm();
-  const submitHandler = async ({ email, password }) => {
+  const submitHandler = async ({ name, email, password }) => {
     try {
+      await axios.post('api/auth/registrarse', {
+        name,
+        email,
+        password,
+      });
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -39,12 +46,28 @@ const LoginScreen = () => {
     }
   };
   return (
-    <Layout title="Iniciar Sesión">
+    <Layout title="Registrarse">
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h3 className="mb-4 text-xl">Iniciar Sesión</h3>
+        <h3 className="mb-4 text-xl">Crear cuenta</h3>
+        <span>Es por seguridad, no vamos a mandar spam jamás, NETA</span>
+        <div className="mb-4">
+          <label htmlFor="name">Nombre</label>
+          <input
+            type="text"
+            className="w-full"
+            id="name"
+            autoFocus
+            {...register('name', {
+              required: 'Por favor ingresa tu nombre',
+            })}
+          ></input>
+          {errors.email && (
+            <div className="text-red-500">{errors.email.message}</div>
+          )}
+        </div>
         <div className="mb-4">
           <label htmlFor="email">Email</label>
           <input
@@ -58,14 +81,13 @@ const LoginScreen = () => {
             })}
             className="w-full"
             id="email"
-            autoFocus
           ></input>
           {errors.email && (
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Contraseña</label>
           <input
             type="password"
             {...register('password', {
@@ -84,7 +106,32 @@ const LoginScreen = () => {
           )}
         </div>
         <div className="mb-4">
-          <button className="primary-button">Entrar </button>
+          <label htmlFor="confirmPassword">Confirmar Contraseña</label>
+          <input
+            className="w-full"
+            type="password"
+            id="confirmPassword"
+            {...register('confirmPassword', {
+              required: 'Por favor confirma tu contraseña',
+              validate: (value) => value === getValues('password'),
+              minLength: {
+                value: 6,
+                message: 'Confirmar la contraseña tiene más de 5 caracteres',
+              },
+            })}
+          />
+          {errors.confirmPassword && (
+            <div className="text-red-500 ">
+              {errors.confirmPassword.message}
+            </div>
+          )}
+          {errors.confirmPassword &&
+            errors.confirmPassword.type === 'validate' && (
+              <div className="text-red-500 ">Las contraseñas no coinciden</div>
+            )}
+        </div>
+        <div className="mb-4">
+          <button className="primary-button">Registrarme </button>
         </div>
         <div className="mb-4">
           ¿No tienes una cuenta? &nbsp;{' '}
