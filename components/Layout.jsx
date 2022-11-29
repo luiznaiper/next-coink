@@ -77,6 +77,16 @@ const Layout = ({ title, children }) => {
                         Cerrar sesión
                       </DropdownLink>
                     </Menu.Item>
+                    {session.user.isAdmin && (
+                      <Menu.Item>
+                        <DropdownLink
+                          className="dropdown-link"
+                          href="/admin/dashboard"
+                        >
+                          Admin Dashboard
+                        </DropdownLink>
+                      </Menu.Item>
+                    )}
                   </Menu.Items>
                 </Menu>
               ) : (
