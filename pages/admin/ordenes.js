@@ -100,7 +100,7 @@ const AdminOrderScreen = () => {
                           : 'NO ENTREGADA'}
                       </td>
                       <td className="p-5">
-                        <Link href={`/orden/${order._id}`} passHref>
+                        <Link href={`/ordenes/${order._id}`} passHref>
                           <a>Detalles</a>
                         </Link>
                       </td>
