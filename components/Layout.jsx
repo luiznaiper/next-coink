@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 import { Store } from '../utils/Store';
 import DropdownLink from './DropdownLink';
+import { useRouter } from 'next/router';
+import { SearchIcon } from '@heroicons/react/outline';
 
 const Layout = ({ title, children }) => {
   const { status, data: session } = useSession();
@@ -17,11 +19,21 @@ const Layout = ({ title, children }) => {
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
+
   const logoutClickHandler = () => {
     Cookies.remove('cart');
     dispatch({ type: 'CART_RESET' });
     signOut({ callbackUrl: '/entrar' });
   };
+
+  const [query, setQuery] = useState('');
+  const router = useRouter();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(`/buscar?query=${query}`);
+  };
+
   return (
     <>
       <Head>
@@ -36,6 +48,24 @@ const Layout = ({ title, children }) => {
             <Link href="/">
               <a className="text-lg font-bold">Coink Oink</a>
             </Link>
+            <form
+              onSubmit={submitHandler}
+              className="mx-auto hidden w-full justify-center md:flex"
+            >
+              <input
+                onChange={(e) => setQuery(e.target.value)}
+                type="text"
+                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                placeholder="Buscar productos"
+              />
+              <button
+                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                type="submit"
+                id="button-addon2"
+              >
+                <SearchIcon className="h-5 w-5"></SearchIcon>
+              </button>
+            </form>
             <div>
               <Link href="/carrito">
                 <a className="p-2">
