@@ -1,0 +1,29 @@
+[
+  {
+    "_id": {
+      "$oid": "13141414241421"
+    },
+    "name": "Joker|",
+    "slug": "joker|",
+    "category": "Clásicos",
+    "image": "images/clasicos/dc/joker-1.webp",
+    "price": 149,
+    "subcategory": "DC",
+    "rating": 0,
+    "numReviews": 0,
+    "countInStock": 20,
+    "description": "Alcancía de Joker",
+    "isFeatured": false,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "16705340238519"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "16705340195773"
+      }
+    },
+    "__v": 1
+  }
+]
