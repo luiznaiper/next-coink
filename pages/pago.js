@@ -41,7 +41,7 @@ const PaymentScreen = () => {
       <CheckoutWizard activeStep={2} />
       <form className="mx-auto max-w-screen-md" onSubmit={submitHandler}>
         <h3>Método de Pago</h3>
-        {['Paypal', 'MercadoPago', 'Stripe'].map((payment) => (
+        {['Paypal'].map((payment) => (
           <div key={payment} className="mb-4">
             <input
               name="paymentMethod"
